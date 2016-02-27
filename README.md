@@ -9,7 +9,7 @@ Shell for [WSO2 Machine Learner] (https://github.com/wso2/product-ml) (Alternati
 ## Future Milestones
 * Support for multiple analyses within a single project
 * Support for multiple models within a single analysis
-* Hyper-Parameter Configurations 
+* Hyper-Parameter configurations 
 
 ## How to Contribute
 * Send your bug fixes pull requests to [master branch] (https://github.com/fazlan-nazeem/Shell4ML) 
