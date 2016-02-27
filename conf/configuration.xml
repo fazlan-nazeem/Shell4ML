@@ -1,0 +1,5 @@
+<Shell4ML>
+	<ConfigFilePath></ConfigFilePath>
+	<DatasetPath></DatasetPath>
+	<MLhost>https://localhost:9443</MLhost>
+</Shell4ML>
