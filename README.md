@@ -1,5 +1,5 @@
 # Shell4ML
-Shell for WSO2 Machine Learner(Alternative for the WSO2ML UI wizard)
+Shell for [WSO2 Machine Learner] (https://github.com/wso2/product-ml) (Alternative for the WSO2ML UI wizard)
 
 ## Features
 * Covers end to end ML pipeline using a single JSON configuration file
@@ -8,7 +8,7 @@ Shell for WSO2 Machine Learner(Alternative for the WSO2ML UI wizard)
 
 ## Future Milestones
 * Support for multiple analyses within a single project
-* Supports for multiple models within a single analysis
+* Support for multiple models within a single analysis
 
 ## How to Contribute
 * Send your bug fixes pull requests to [master branch] (https://github.com/fazlan-nazeem/Shell4ML) 
