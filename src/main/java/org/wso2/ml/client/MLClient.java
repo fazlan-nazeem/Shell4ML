@@ -28,8 +28,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.wso2.ml.conf.GlobalConfiguration;
 import org.wso2.ml.constants.MLConstants;
-import org.wso2.ml.driver.Shell;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,35 +40,44 @@ import java.util.Map;
 
 public class MLClient {
 
+    private String mlHost = GlobalConfiguration.getInstance().getMlHost();
+    private String mlDatasetPath = GlobalConfiguration.getInstance().getDatasetPath();
 
     public CloseableHttpResponse createdDataSet(JSONObject datasetConf) throws IOException {
-        CloseableHttpClient httpClient =  HttpClients.createDefault();
+        CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpPost httpPost = new HttpPost(MLConstants.HOST + "/api/datasets/");
+        HttpPost httpPost = new HttpPost(mlHost + "/api/datasets/");
         httpPost.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
 
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-        multipartEntityBuilder.addPart("description", new StringBody(datasetConf.get("description").toString(), ContentType.TEXT_PLAIN));
-        multipartEntityBuilder.addPart("sourceType", new StringBody(datasetConf.get("sourceType").toString(), ContentType.TEXT_PLAIN));
-        multipartEntityBuilder.addPart("destination", new StringBody(datasetConf.get("destination").toString(), ContentType.TEXT_PLAIN));
-        multipartEntityBuilder.addPart("dataFormat", new StringBody(datasetConf.get("dataFormat").toString(), ContentType.TEXT_PLAIN));
-        multipartEntityBuilder.addPart("containsHeader", new StringBody(datasetConf.get("containsHeader").toString(), ContentType.TEXT_PLAIN));
-        multipartEntityBuilder.addPart("datasetName", new StringBody(datasetConf.get("datasetName").toString(), ContentType.TEXT_PLAIN));
-        multipartEntityBuilder.addPart("version",
-                new StringBody(datasetConf.get("version").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder.addPart("description",
+                new StringBody(datasetConf.get("description").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder.addPart("sourceType",
+                new StringBody(datasetConf.get("sourceType").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder.addPart("destination",
+                new StringBody(datasetConf.get("destination").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder.addPart("dataFormat",
+                new StringBody(datasetConf.get("dataFormat").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder.addPart("containsHeader",
+                new StringBody(datasetConf.get("containsHeader").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder.addPart("datasetName",
+                new StringBody(datasetConf.get("datasetName").toString(), ContentType.TEXT_PLAIN));
+        multipartEntityBuilder
+                .addPart("version", new StringBody(datasetConf.get("version").toString(), ContentType.TEXT_PLAIN));
 
-        File file = new File(Shell.getResourcePath()+datasetConf.get("file").toString());
-        multipartEntityBuilder.addBinaryBody("file", file, ContentType.APPLICATION_OCTET_STREAM, datasetConf.get("file").toString());
+        File file = new File(mlDatasetPath);
+        multipartEntityBuilder
+                .addBinaryBody("file", file, ContentType.APPLICATION_OCTET_STREAM, datasetConf.get("file").toString());
 
         httpPost.setEntity(multipartEntityBuilder.build());
-            return httpClient.execute(httpPost);
+        return httpClient.execute(httpPost);
 
     }
 
-    public CloseableHttpResponse createProject(JSONObject projectConf){
-        CloseableHttpClient httpClient =  HttpClients.createDefault();
+    public CloseableHttpResponse createProject(JSONObject projectConf) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpPost httpPost = new HttpPost(MLConstants.HOST + "/api/projects");
+        HttpPost httpPost = new HttpPost(mlHost + "/api/projects");
         httpPost.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
         httpPost.setHeader(MLConstants.CONTENT_TYPE, MLConstants.CONTENT_TYPE_APPLICATION_JSON);
 
@@ -100,10 +109,10 @@ public class MLClient {
         return null;
     }
 
-    public CloseableHttpResponse getProject(JSONObject projectConf){
-        CloseableHttpClient httpClient =  HttpClients.createDefault();
+    public CloseableHttpResponse getProject(JSONObject projectConf) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpGet httpGet = new HttpGet(MLConstants.HOST + "/api/projects/"+ projectConf.get("name").toString());
+        HttpGet httpGet = new HttpGet(mlHost + "/api/projects/" + projectConf.get("name").toString());
         httpGet.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
         httpGet.setHeader(MLConstants.CONTENT_TYPE, MLConstants.CONTENT_TYPE_APPLICATION_JSON);
 
@@ -114,10 +123,11 @@ public class MLClient {
         }
         return null;
     }
-    public CloseableHttpResponse createAnalysis(JSONObject analysesConf, long projectId){
-        CloseableHttpClient httpClient =  HttpClients.createDefault();
 
-        HttpPost httpPost = new HttpPost(MLConstants.HOST + "/api/analyses");
+    public CloseableHttpResponse createAnalysis(JSONObject analysesConf, long projectId) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        HttpPost httpPost = new HttpPost(mlHost + "/api/analyses");
         httpPost.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
         httpPost.setHeader(MLConstants.CONTENT_TYPE, MLConstants.CONTENT_TYPE_APPLICATION_JSON);
 
@@ -146,10 +156,11 @@ public class MLClient {
         return null;
     }
 
-    public static CloseableHttpResponse getAnalysis(JSONObject analysisConf, long projectId){
-        CloseableHttpClient httpClient =  HttpClients.createDefault();
+    public CloseableHttpResponse getAnalysis(JSONObject analysisConf, long projectId) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpGet httpGet = new HttpGet(MLConstants.HOST + "/api/projects/"+ projectId + "/analyses/" + analysisConf.get("name").toString());
+        HttpGet httpGet = new HttpGet(
+                mlHost + "/api/projects/" + projectId + "/analyses/" + analysisConf.get("name").toString());
         httpGet.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
         httpGet.setHeader(MLConstants.CONTENT_TYPE, MLConstants.CONTENT_TYPE_APPLICATION_JSON);
 
@@ -161,7 +172,8 @@ public class MLClient {
         return null;
 
     }
-    public static CloseableHttpResponse setModelConfigs(JSONArray modelConfigConf, long analysisId) {
+
+    public CloseableHttpResponse setModelConfigs(JSONArray modelConfigConf, long analysisId) {
 
         Map<String, String> configurations = new HashMap<String, String>();
         configurations.put(MLConstants.ALGORITHM_NAME,
@@ -182,7 +194,7 @@ public class MLClient {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPost httpPost = new HttpPost(MLConstants.HOST + "/api/analyses/" + analysisId + "/configurations");
+            HttpPost httpPost = new HttpPost(mlHost + "/api/analyses/" + analysisId + "/configurations");
             httpPost.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
             httpPost.setHeader(MLConstants.CONTENT_TYPE, MLConstants.CONTENT_TYPE_APPLICATION_JSON);
             StringEntity params = new StringEntity(payload);
@@ -199,9 +211,9 @@ public class MLClient {
         return null;
     }
 
-    public static CloseableHttpResponse setDefaultHyperParams(long analysisId){
+    public CloseableHttpResponse setDefaultHyperParams(long analysisId) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(MLConstants.HOST + "/api/analyses/" + analysisId + "/hyperParams/defaults");
+        HttpPost httpPost = new HttpPost(mlHost + "/api/analyses/" + analysisId + "/hyperParams/defaults");
         httpPost.setHeader(MLConstants.AUTHORIZATION_HEADER, getBasicAuthKey());
         httpPost.setHeader(MLConstants.CONTENT_TYPE, MLConstants.CONTENT_TYPE_APPLICATION_JSON);
         try {
@@ -211,9 +223,6 @@ public class MLClient {
         }
         return null;
     }
-
-
-
 
     public static String getBasicAuthKey() {
         String token = "admin" + ":" + "admin";

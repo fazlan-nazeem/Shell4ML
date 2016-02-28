@@ -46,4 +46,16 @@ public class MLConstants {
 
     public static final String KEY = "key";
     public static final String VALUE = "value";
+
+    public static final String WARNING_ML_CONF_PATH = "Please provide ML configuration file path";
+    public static final String WARNING_DATASET_PATH = "Please provide dataset file path";
+    public static final String WARNING_HOST_URI = "Please provide ML host URI";
+    public static final String SYSTEM_SHUTDOWN = "System shutting down";
+
+    public static final String KEY_DATASET = "dataset";
+    public static final String KEY_PROJECT = "project";
+    public static final String KEY_ANALYSIS = "analysis";
+    public static final String KEY_MODEL = "model";
+    public static final String KEY_MODELCONFIG = "modelconfig";
+
 }
