@@ -17,7 +17,7 @@ package org.wso2.ml.constants;
 
 public class GlobalConstants {
 
-    public static final String GLOBAL_CONFIG_PATH = "conf/configuration.xml";
+    public static final String GLOBAL_CONFIG_PATH = "../conf/configuration.xml";
 
     public static final String ROOT_TAG = "Shell4ML";
     public static final String ML_CONFIG_PATH_TAG = "ConfigFilePath";

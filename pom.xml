@@ -40,11 +40,13 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.5.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -76,15 +78,23 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<!-- <classpathPrefix>lib</classpathPrefix> -->
+							<classpathPrefix>classes/lib</classpathPrefix>
 							<mainClass>org.wso2.ml.driver.Shell</mainClass>
 						</manifest>
-						<manifestEntries>
-							<Class-Path>lib/</Class-Path>
-						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
