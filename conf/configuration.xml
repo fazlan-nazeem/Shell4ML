@@ -1,5 +1,5 @@
 <Shell4ML>
-	<ConfigFilePath>/home/fazlann/Desktop/latest/files/configuration.json</ConfigFilePath>
-	<DatasetPath>/home/fazlann/Desktop/latest/files/IndiansDiabetes.csv</DatasetPath>
+	<ConfigFilePath>../resources/configuration.json</ConfigFilePath>
+	<DatasetPath>../resources/IndiansDiabetes.csv</DatasetPath>
 	<MLhost>http://localhost:9763</MLhost>
 </Shell4ML>
