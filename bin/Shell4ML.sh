@@ -18,6 +18,6 @@
 #
 # Make sure WSO2 ML server is running prior to execution of this script
 # -----------------------------------------------------------------------------
-which java
+
 java -jar ../target/restclient-1.0-SNAPSHOT.jar 
 
